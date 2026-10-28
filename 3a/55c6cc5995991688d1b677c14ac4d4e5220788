@@ -1,0 +1,258 @@
+action.yml
+  s_a26e669cd681d7::t_e1e9ce233744c8 1-2,6,34-45,63-65,71-77
+README.md
+  s_a26e669cd681d7::t_2c935b9dc370ee 1,3-4,6,8,14-35,38-41,46,51,57-58,69-157,160,165-198,200,202-271,294,314,318
+  s_a26e669cd681d7::t_35ca71180e44b4 319
+site/.next/BUILD_ID
+  s_a26e669cd681d7::t_8e35540e59bbd6 1
+site/.next/app-build-manifest.json
+  s_a26e669cd681d7::t_41777a380631d4 1-64
+site/.next/app-path-routes-manifest.json
+  s_a26e669cd681d7::t_5f353020d2b2b3 1-9
+site/.next/build-manifest.json
+  s_a26e669cd681d7::t_d4b3f8b25373ef 1-33
+site/.next/cache/.previewinfo
+  s_a26e669cd681d7::t_21e64472507d5f 1
+site/.next/cache/.rscinfo
+  s_a26e669cd681d7::t_89067e45e8e01e 1
+site/.next/cache/.tsbuildinfo
+  s_a26e669cd681d7::t_08dd3ce8660ad5 1
+site/.next/diagnostics/build-diagnostics.json
+  s_a26e669cd681d7::t_578460cf74a9ba 1-6
+site/.next/diagnostics/framework.json
+  s_a26e669cd681d7::t_49a1e057227e0f 1
+site/.next/export-marker.json
+  s_a26e669cd681d7::t_ff0243332b7f44 1-6
+site/.next/images-manifest.json
+  s_a26e669cd681d7::t_1ce12c29d5744f 1-58
+site/.next/next-minimal-server.js.nft.json
+  s_a26e669cd681d7::t_8f1f245d270208 1
+site/.next/next-server.js.nft.json
+  s_a26e669cd681d7::t_7c80fbb6610e55 1
+site/.next/package.json
+  s_a26e669cd681d7::t_4c90c3f31da259 1
+site/.next/prerender-manifest.json
+  s_a26e669cd681d7::t_743b1a2d1a3233 2-10,12-13,16-18,20-30,33-39,41-47,50-60,62-66,68-71,73-76,78-89,91-93,95-96,99-120,123-125,128-138,140-144,146-149,151-162,164-170,172
+site/.next/react-loadable-manifest.json
+  s_a26e669cd681d7::t_1e79ea2a3aedd9 1
+site/.next/required-server-files.json
+  s_a26e669cd681d7::t_a86ea4e6e588be 1-7,9-11,13-38,40-48,50-57,59-64,66-67,69-71,73-74,76-282,284-285,287-314,316-319
+site/.next/routes-manifest.json
+  s_a26e669cd681d7::t_da1f9993e5be6c 1-104
+site/.next/server/app-paths-manifest.json
+  s_a26e669cd681d7::t_a3d3c3a6a5326a 1-9
+site/.next/server/app/_not-found.html
+  s_a26e669cd681d7::t_f5d74cfb41ef97 1
+site/.next/server/app/_not-found.meta
+  s_a26e669cd681d7::t_be289d614b5100 2-6,8-16
+site/.next/server/app/_not-found.rsc
+  s_a26e669cd681d7::t_0c3f0206a9d9d1 1-23
+site/.next/server/app/_not-found/page.js
+  s_a26e669cd681d7::t_f85d8efcdd74a5 1-2
+site/.next/server/app/_not-found/page.js.nft.json
+  s_a26e669cd681d7::t_042169a16309af 1
+site/.next/server/app/_not-found/page_client-reference-manifest.js
+  s_a26e669cd681d7::t_fc1bf7f51001a8 1
+site/.next/server/app/api/scan/route.js
+  s_a26e669cd681d7::t_ea7b4b5b23b9e4 1-2
+site/.next/server/app/api/scan/route.js.nft.json
+  s_a26e669cd681d7::t_de59c5c8be8012 1
+site/.next/server/app/api/scan/route_client-reference-manifest.js
+  s_a26e669cd681d7::t_df1177f753dd9e 1
+site/.next/server/app/checklist.html
+  s_a26e669cd681d7::t_1e1dc59a4f7553 1-68
+site/.next/server/app/checklist.meta
+  s_a26e669cd681d7::t_e4a3697c01e195 1-15
+site/.next/server/app/checklist.rsc
+  s_a26e669cd681d7::t_f68eaeb2c23e75 1-34
+site/.next/server/app/checklist/page.js
+  s_a26e669cd681d7::t_8f147d1fd016af 1-2
+site/.next/server/app/checklist/page.js.nft.json
+  s_a26e669cd681d7::t_7980b1177bfc79 1
+site/.next/server/app/checklist/page_client-reference-manifest.js
+  s_a26e669cd681d7::t_6f8248405790a6 1
+site/.next/server/app/index.html
+  s_a26e669cd681d7::t_3f51fd2fe0da01 1-29
+site/.next/server/app/index.meta
+  s_a26e669cd681d7::t_0c50338eac9e18 2-5,7-13,15
+site/.next/server/app/index.rsc
+  s_a26e669cd681d7::t_0ae5ccfd5a86fc 1-37
+site/.next/server/app/opengraph-image.meta
+  s_a26e669cd681d7::t_2ad5ce9708f565 1
+site/.next/server/app/opengraph-image/route.js
+  s_a26e669cd681d7::t_cbeee561818c8e 1
+site/.next/server/app/opengraph-image/route.js.nft.json
+  s_a26e669cd681d7::t_65399706456b69 1
+site/.next/server/app/opengraph-image/route_client-reference-manifest.js
+  s_a26e669cd681d7::t_463f4c999ada80 1
+site/.next/server/app/page.js
+  s_a26e669cd681d7::t_32042a1529531b 1-2,23
+site/.next/server/app/page.js.nft.json
+  s_a26e669cd681d7::t_81d7809d03144d 1
+site/.next/server/app/page_client-reference-manifest.js
+  s_a26e669cd681d7::t_1e235267cbb161 1
+site/.next/server/app/robots.txt.body
+  s_a26e669cd681d7::t_dc0328129e6346 1-5
+site/.next/server/app/robots.txt.meta
+  s_a26e669cd681d7::t_1d505a0e88baa0 1
+site/.next/server/app/robots.txt/route.js
+  s_a26e669cd681d7::t_c4b24dd4197c2e 1-16
+site/.next/server/app/robots.txt/route.js.nft.json
+  s_a26e669cd681d7::t_53795ba05f98fa 1
+site/.next/server/app/robots.txt/route_client-reference-manifest.js
+  s_a26e669cd681d7::t_353f0df505521d 1
+site/.next/server/app/sitemap.xml.body
+  s_a26e669cd681d7::t_c6422a9ae17489 1-13
+site/.next/server/app/sitemap.xml.meta
+  s_a26e669cd681d7::t_b09e1b62975a70 1
+site/.next/server/app/sitemap.xml/route.js
+  s_a26e669cd681d7::t_d1caec57ca2b42 1-16
+site/.next/server/app/sitemap.xml/route.js.nft.json
+  s_a26e669cd681d7::t_f67133607c3342 1
+site/.next/server/app/sitemap.xml/route_client-reference-manifest.js
+  s_a26e669cd681d7::t_5b3c8c54ad1e18 1
+site/.next/server/chunks/611.js
+  s_a26e669cd681d7::t_aafb45a75c2e7a 1-6
+site/.next/server/chunks/692.js
+  s_a26e669cd681d7::t_6672380321c199 1
+site/.next/server/chunks/818.js
+  s_a26e669cd681d7::t_a66214f16105e9 1-11
+site/.next/server/chunks/887.js
+  s_a26e669cd681d7::t_74447354bbccd1 1-22
+site/.next/server/functions-config-manifest.json
+  s_a26e669cd681d7::t_c8edd7d27845c9 1-8
+site/.next/server/interception-route-rewrite-manifest.js
+  s_a26e669cd681d7::t_cba66fa0e37af4 1
+site/.next/server/middleware-build-manifest.js
+  s_a26e669cd681d7::t_30941078604629 1
+site/.next/server/middleware-manifest.json
+  s_a26e669cd681d7::t_81bfe14bc6fb18 1-6
+site/.next/server/middleware-react-loadable-manifest.js
+  s_a26e669cd681d7::t_26aa604b4b1ac5 1
+site/.next/server/next-font-manifest.js
+  s_a26e669cd681d7::t_993c0ba907c21b 1
+site/.next/server/next-font-manifest.json
+  s_a26e669cd681d7::t_5a9389d1350dd3 1
+site/.next/server/pages-manifest.json
+  s_a26e669cd681d7::t_29567383409054 1-6
+site/.next/server/pages/404.html
+  s_a26e669cd681d7::t_2650bd1e0c0515 1
+site/.next/server/pages/500.html
+  s_a26e669cd681d7::t_afa7308e6aac35 1
+site/.next/server/pages/_app.js
+  s_a26e669cd681d7::t_95904490f49691 1
+site/.next/server/pages/_app.js.nft.json
+  s_a26e669cd681d7::t_4f0849eaad9a0e 1
+site/.next/server/pages/_document.js
+  s_a26e669cd681d7::t_8a3399d7de8f02 1
+site/.next/server/pages/_document.js.nft.json
+  s_a26e669cd681d7::t_8e256c220a03c1 1
+site/.next/server/pages/_error.js
+  s_a26e669cd681d7::t_7364588b19e6fe 1-19
+site/.next/server/pages/_error.js.nft.json
+  s_a26e669cd681d7::t_d5f726372f3dfb 1
+site/.next/server/route-cache/APP_PAGE/c6377dd9ce6a1c2cd100eb4344e843eb4639b9ed26f84643f77680e9eb454c4b/$/index.html
+  s_a26e669cd681d7::t_194bf25ee8ec24 1-29
+site/.next/server/route-cache/APP_PAGE/c6377dd9ce6a1c2cd100eb4344e843eb4639b9ed26f84643f77680e9eb454c4b/$/index.meta
+  s_a26e669cd681d7::t_635ec0f0a8d2cc 1
+site/.next/server/route-cache/APP_PAGE/c6377dd9ce6a1c2cd100eb4344e843eb4639b9ed26f84643f77680e9eb454c4b/$/index.rsc
+  s_a26e669cd681d7::t_55a514c1b51b3e 1-37
+site/.next/server/server-reference-manifest.js
+  s_a26e669cd681d7::t_707be75fa86325 1
+site/.next/server/server-reference-manifest.json
+  s_a26e669cd681d7::t_d009498c264090 1
+site/.next/server/webpack-runtime.js
+  s_a26e669cd681d7::t_babc4a753cb8a7 1
+site/.next/static/Yr0kZl0Z5wGkLbzDzlUqs/_buildManifest.js
+  s_a26e669cd681d7::t_a41739134382e0 1
+site/.next/static/Yr0kZl0Z5wGkLbzDzlUqs/_ssgManifest.js
+  s_a26e669cd681d7::t_e2ff9467874ddd 1
+site/.next/static/chunks/255-b1e2483a7e02feee.js
+  s_a26e669cd681d7::t_47acb67e40d4ee 1
+site/.next/static/chunks/4bd1b696-c023c6e3521b1417.js
+  s_a26e669cd681d7::t_054fa06d156293 1
+site/.next/static/chunks/619-ba102abea3e3d0e4.js
+  s_a26e669cd681d7::t_134f1a960c3e85 1
+site/.next/static/chunks/app/_not-found/page-ce5c180925f83c35.js
+  s_a26e669cd681d7::t_68f9b203641d81 1
+site/.next/static/chunks/app/api/scan/route-398a22c5dcab255e.js
+  s_a26e669cd681d7::t_68b661722984ea 1
+site/.next/static/chunks/app/checklist/page-c402a8398a5d08e6.js
+  s_a26e669cd681d7::t_dc9d42ec978bfd 1
+site/.next/static/chunks/app/layout-11c1062de271cbf1.js
+  s_a26e669cd681d7::t_f6d5a2ed51978a 1
+site/.next/static/chunks/app/opengraph-image/route-398a22c5dcab255e.js
+  s_a26e669cd681d7::t_55a386acce1e93 1
+site/.next/static/chunks/app/page-2472bcd955e15400.js
+  s_a26e669cd681d7::t_092ac9f2e88a27 1
+site/.next/static/chunks/app/robots.txt/route-398a22c5dcab255e.js
+  s_a26e669cd681d7::t_cd539cb9ee7f21 1
+site/.next/static/chunks/app/sitemap.xml/route-398a22c5dcab255e.js
+  s_a26e669cd681d7::t_f871cdcc200127 1
+site/.next/static/chunks/framework-b1e5f14688f9ffe6.js
+  s_a26e669cd681d7::t_4ce60cd9f0b3fc 1
+site/.next/static/chunks/main-app-523b4e8192c725a6.js
+  s_a26e669cd681d7::t_1e1d6a5456dcff 1
+site/.next/static/chunks/main-d5f469dbc33731a6.js
+  s_a26e669cd681d7::t_f985ea5f8750fb 1
+site/.next/static/chunks/pages/_app-7d307437aca18ad4.js
+  s_a26e669cd681d7::t_e3656931e1bae4 1
+site/.next/static/chunks/pages/_error-cb2a52f75f2162e2.js
+  s_a26e669cd681d7::t_ad15e32343791d 1
+site/.next/static/chunks/polyfills-42372ed130431b0a.js
+  s_a26e669cd681d7::t_e04b87c8f3fcf3 1
+site/.next/static/chunks/webpack-3f379db176a7b0c6.js
+  s_a26e669cd681d7::t_6aa1f20e28b644 1
+site/.next/static/css/84a436eb1dd4c3c6.css
+  s_a26e669cd681d7::t_0eb5188020b10d 1
+site/.next/trace
+  s_a26e669cd681d7::t_2201f32c1eb30c 1-11
+site/.next/types/app/api/scan/route.ts
+  s_a26e669cd681d7::t_25e218444212a4 1-347
+site/.next/types/app/checklist/page.ts
+  s_a26e669cd681d7::t_97d6b812b5e6ca 1-84
+site/.next/types/app/layout.ts
+  s_a26e669cd681d7::t_256e919b969c41 1-84
+site/.next/types/app/page.ts
+  s_a26e669cd681d7::t_2f58bf6897f05f 1-84
+site/.next/types/cache-life.d.ts
+  s_a26e669cd681d7::t_ab9757c1e8a1f4 1-141
+site/.next/types/package.json
+  s_a26e669cd681d7::t_5feacef0ad62ab 1
+site/.next/types/routes.d.ts
+  s_a26e669cd681d7::t_19574d3217d399 1-74
+site/.next/types/validator.ts
+  s_a26e669cd681d7::t_96ff6c35e1b155 1-88
+site/next-env.d.ts
+  s_a26e669cd681d7::t_1d20edb94aad8a 1-6
+.github/workflows/ci.yml
+  s_a26e669cd681d7::t_e6ba0a7e3bbf56 12,16-28
+site/.next/server/route-cache/APP_PAGE/2fc55ce33da975f3782c21ae6051cf71b1facb919cb3a8060a5709a71415389c/$/checklist.html
+  s_a26e669cd681d7::t_9d9cd0e8d896ea 1-68
+site/.next/server/route-cache/APP_PAGE/2fc55ce33da975f3782c21ae6051cf71b1facb919cb3a8060a5709a71415389c/$/checklist.meta
+  s_a26e669cd681d7::t_f49301edc99299 1
+site/.next/server/route-cache/APP_PAGE/2fc55ce33da975f3782c21ae6051cf71b1facb919cb3a8060a5709a71415389c/$/checklist.rsc
+  s_a26e669cd681d7::t_0b7c85883e933c 1-34
+site/.next/server/route-cache/APP_PAGE/41da0ef926a63354a29f601d8e8d0a5951196c45ebcd28b7d4708fb7f56f3bf1/$/_not-found.html
+  s_a26e669cd681d7::t_7fda796728574b 1
+site/.next/server/route-cache/APP_PAGE/41da0ef926a63354a29f601d8e8d0a5951196c45ebcd28b7d4708fb7f56f3bf1/$/_not-found.meta
+  s_a26e669cd681d7::t_7a63cba40dec83 1
+site/.next/server/route-cache/APP_PAGE/41da0ef926a63354a29f601d8e8d0a5951196c45ebcd28b7d4708fb7f56f3bf1/$/_not-found.rsc
+  s_a26e669cd681d7::t_068b024f38b55c 1-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3a55c6cc5995991688d1b677c14ac4d4e5220788",
+  "prompts": {},
+  "sessions": {
+    "s_a26e669cd681d7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4121e4bf-dff1-4665-a92b-c08f125b9b89",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "GJ <info@gertjandewilde.com>"
+    }
+  }
+}
