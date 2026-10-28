@@ -1,0 +1,25 @@
+src/requirements.js
+  s_a26e669cd681d7::t_2cc48571f3ac13 106
+src/runtime.js
+  s_a26e669cd681d7::t_69fbad9f155696 161-163
+test/e2e.test.js
+  s_a26e669cd681d7::t_a2d36f74c708f8 82-85
+test/runtime.test.js
+  s_a26e669cd681d7::t_d0151526e0fb41 44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c0a0c9f683825b34014f9cdd57c7910781203a32",
+  "prompts": {},
+  "sessions": {
+    "s_a26e669cd681d7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4121e4bf-dff1-4665-a92b-c08f125b9b89",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "GJ <info@gertjandewilde.com>"
+    }
+  }
+}
