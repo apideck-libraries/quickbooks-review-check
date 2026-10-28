@@ -41,7 +41,7 @@ test('trace / http redirect / open redirect', () => {
   assert.equal(analyzeTrace(res({ status: 405 })).status, 'pass');
   assert.equal(analyzeHttpToHttps({ url: 'http://a', status: 301, headers: { location: 'https://a/' } }).status, 'pass');
   assert.equal(analyzeHttpToHttps({ url: 'http://a', status: 200, headers: {} }).status, 'fail');
-  assert.ok(analyzeOpenRedirect(res({ status: 302, headers: { location: 'https://evil.example.com/qbrc' } }), 'next'));
+  assert.equal(analyzeOpenRedirect(res({ status: 302, headers: { location: 'https://evil.example.com/qbrc' } }), 'next').id, 'open-redirect:/dashboard?next');
 });
 
 test('tls: accepting 1.0 fails, 1.1 warns', () => {

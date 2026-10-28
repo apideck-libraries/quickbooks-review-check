@@ -79,7 +79,10 @@ test('runtime: insecure sample app fails the expected checks', async () => {
   // TRACK is not tested here: Node's HTTP parser rejects it with a 400 before the app sees it.
   assert.equal(s['token-endpoint:/oauth/callback'], 'fail');
   assert.equal(s['cache-control:/oauth/callback'], 'fail');
-  assert.equal(s['open-redirect:next'], 'fail');
+  assert.equal(s['open-redirect:/?next'], 'fail');
+  assert.equal(s['open-redirect:/oauth/callback?next'], 'fail');
+  const ids = (await scan('insecure-app')).map((r) => r.id);
+  assert.equal(new Set(ids).size, ids.length, 'result ids are unique');
   assert.equal(s['cookie:sid'], 'fail');
   assert.equal(s['disclosure'], 'warn');
   assert.equal(s['security-headers'], 'warn');

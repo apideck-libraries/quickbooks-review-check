@@ -158,7 +158,9 @@ export function analyzeTokenEndpoint(res) {
 export function analyzeOpenRedirect(res, param) {
   const loc = String(res.headers.location || '');
   if (res.status >= 300 && res.status < 400 && loc.startsWith(EVIL)) {
-    return r(`open-redirect:${param}`, 'open-redirect', 'fail', `Open redirect via ?${param}=`, `${res.url} → ${loc}`, { fix: 'Only redirect to relative paths or an allow-list of hosts.' });
+    // The same parameter can be open on several paths; keep one result per path and parameter.
+    const path = new URL(res.url).pathname;
+    return r(`open-redirect:${path}?${param}`, 'open-redirect', 'fail', `Open redirect via ${path}?${param}=`, `${res.url} → ${loc}`, { fix: 'Only redirect to relative paths or an allow-list of hosts.' });
   }
   return null;
 }
