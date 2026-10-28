@@ -2,3 +2,4 @@ node_modules/
 *.log
 report.md
 report.json
+.vercel/
