@@ -1,0 +1,31 @@
+name: Release
+# Publishes to npm when a version tag (v1.2.3) is pushed, using npm trusted publishing (OIDC):
+# no npm token is stored in this repo. One-time setup on npmjs.com: package settings →
+# Trusted publishing → GitHub Actions, repository apideck-libraries/quickbooks-review-check,
+# workflow release.yml.
+on:
+  push:
+    tags: ['v*.*.*']
+
+permissions:
+  contents: write # move the major tag
+  id-token: write # npm trusted publishing
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - run: npm test
+      - name: Tag matches package.json version
+        run: test "v$(node -p "require('./package.json').version")" = "$GITHUB_REF_NAME"
+      - run: npm publish --provenance
+      - name: Move the major tag (v0, v1, ...) used by the GitHub Action
+        run: |
+          major="${GITHUB_REF_NAME%%.*}"
+          git tag -f "$major"
+          git push -f origin "$major"
