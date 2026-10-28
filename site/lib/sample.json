@@ -1,0 +1,190 @@
+[
+ {
+  "id": "http-redirect",
+  "requirement": "https-everywhere",
+  "status": "pass",
+  "title": "HTTP redirects to HTTPS",
+  "detail": "HTTP 301 → https://app.example.com/"
+ },
+ {
+  "id": "tls-1.0",
+  "requirement": "tls-version",
+  "status": "pass",
+  "title": "TLS 1.0 rejected",
+  "detail": "Handshake refused."
+ },
+ {
+  "id": "tls-1.1",
+  "requirement": "tls-version",
+  "status": "warn",
+  "title": "TLS 1.1 accepted",
+  "detail": "TLS 1.1 meets the minimum but is deprecated; TLS 1.2+ is recommended.",
+  "fix": "Set the minimum protocol to TLS 1.2."
+ },
+ {
+  "id": "cache-control:/dashboard",
+  "requirement": "cache-control",
+  "status": "fail",
+  "title": "Sensitive page cacheable: /dashboard",
+  "detail": "Cache-Control: private, max-age=0. `private` still allows browser caching.",
+  "fix": "Send `Cache-Control: no-store, no-cache, must-revalidate` on every authenticated or token-handling response."
+ },
+ {
+  "id": "method:TRACE",
+  "requirement": "http-methods",
+  "status": "pass",
+  "title": "TRACE disabled",
+  "detail": "TRACE → 405"
+ },
+ {
+  "id": "cookie:connect.sid",
+  "requirement": "cookie-flags",
+  "status": "fail",
+  "title": "Cookie connect.sid missing httponly",
+  "detail": "Looks like a session/auth cookie. Set-Cookie: connect.sid=s%3A…; Path=/; Secure",
+  "fix": "Set `Secure; HttpOnly; SameSite=Lax` on session cookies."
+ },
+ {
+  "id": "token-endpoint:/oauth/callback",
+  "requirement": "token-endpoint-302",
+  "status": "fail",
+  "title": "/oauth/callback returns HTML with tokens in the URL",
+  "detail": "GET /oauth/callback?code=…&realmId=… → 200 text/html.",
+  "fix": "Handle the callback server-side and always answer with `302 Found`."
+ },
+ {
+  "id": "open-redirect",
+  "requirement": "open-redirect",
+  "status": "pass",
+  "title": "No open redirect found",
+  "detail": "Probed 9 common redirect parameters."
+ },
+ {
+  "id": "src:log-token",
+  "requirement": "patching-logging",
+  "status": "fail",
+  "title": "OAuth tokens or realmId written to logs",
+  "detail": "1 occurrence.",
+  "locations": [
+   {
+    "file": "server/app.js",
+    "line": 16,
+    "snippet": "console.log('The Token is  ' + JSON.stringify(authResponse.getJson()));"
+   }
+  ],
+  "fix": "Never log tokens, realmId, or QuickBooks payloads. Log a token fingerprint (last 4 chars) or a request id instead."
+ },
+ {
+  "id": "src:inline-key",
+  "requirement": "key-storage",
+  "status": "fail",
+  "title": "Encryption key hardcoded in source",
+  "detail": "1 occurrence.",
+  "locations": [
+   {
+    "file": "server/app.js",
+    "line": 4,
+    "snippet": "const ENCRYPTION_KEY = 'not-a-real-key-example';"
+   }
+  ],
+  "fix": "Load the AES key from a separate config file or secret manager (env var, AWS KMS, Vault) — Intuit requires it not be inline."
+ },
+ {
+  "id": "src:token-to-browser",
+  "requirement": "token-exposure",
+  "status": "fail",
+  "title": "OAuth tokens sent to or stored in the browser",
+  "detail": "1 occurrence.",
+  "locations": [
+   {
+    "file": "server/app.js",
+    "line": 22,
+    "snippet": "app.get('/token', (req, res) => res.json(oauthClient.getToken()));"
+   }
+  ],
+  "fix": "Keep Intuit tokens server-side only. The browser should hold an opaque session cookie, never access/refresh tokens or realmId."
+ },
+ {
+  "id": "src:cookie-flag-off",
+  "requirement": "cookie-flags",
+  "status": "warn",
+  "title": "Cookie configured without Secure/HttpOnly",
+  "detail": "1 occurrence.",
+  "locations": [
+   {
+    "file": "server/app.js",
+    "line": 6,
+    "snippet": "app.use(require('express-session')({ secret: 'x', cookie: { httpOnly: false } }));"
+   }
+  ],
+  "fix": "Set secure: true and httpOnly: true for session cookies in every non-local environment."
+ },
+ {
+  "id": "src:sql-concat",
+  "requirement": "injection",
+  "status": "warn",
+  "title": "SQL built with string interpolation",
+  "detail": "1 occurrence.",
+  "locations": [
+   {
+    "file": "server/app.js",
+    "line": 17,
+    "snippet": "await db.query(`UPDATE companies SET refresh_token = '${authResponse.token.refresh_token}' WHERE realm = ${req.query.realmId}`);"
+   }
+  ],
+  "fix": "Use parameterized queries / prepared statements."
+ },
+ {
+  "id": "src:static-state",
+  "requirement": "csrf",
+  "status": "fail",
+  "title": "OAuth state parameter is a constant",
+  "detail": "The authorize URL uses a hardcoded `state` (Intuit's sample code ships `testState`). That disables CSRF protection on the connect flow.",
+  "locations": [
+   {
+    "file": "server/app.js",
+    "line": 10,
+    "snippet": "const authUri = oauthClient.authorizeUri({ scope: [OAuthClient.scopes.Accounting], state: 'testState' });"
+   }
+  ],
+  "fix": "Generate a random state per request (crypto.randomBytes(32)), store it in the session, and compare it in the callback before exchanging the code."
+ },
+ {
+  "id": "src:csrf-lib",
+  "requirement": "csrf",
+  "status": "warn",
+  "title": "No CSRF middleware detected",
+  "detail": "No CSRF library or SameSite cookie config found. Intuit's pen test checks state-changing forms and endpoints.",
+  "fix": "Add CSRF tokens (csrf-csrf, Django/Rails built-ins) or SameSite=Lax/Strict session cookies plus origin checks.",
+  "locations": []
+ },
+ {
+  "id": "src:token-encryption",
+  "requirement": "token-encryption",
+  "status": "fail",
+  "title": "Refresh token stored without encryption",
+  "detail": "Found code persisting the refresh token but no AES/3DES encryption anywhere in the codebase.",
+  "locations": [
+   {
+    "file": "server/app.js",
+    "line": 18,
+    "snippet": "db.companies.save({ refreshToken: authResponse.token.refresh_token, realmId: req.query.realmId });"
+   }
+  ],
+  "fix": "Encrypt refresh token and realmId with AES-256-GCM before writing them (see README for a 20-line helper)."
+ },
+ {
+  "id": "src:realm-encryption",
+  "requirement": "token-encryption",
+  "status": "fail",
+  "title": "realmId stored without encryption",
+  "detail": "Intuit requires realmId to be encrypted at rest along with the refresh token.",
+  "locations": [
+   {
+    "file": "server/app.js",
+    "line": 18,
+    "snippet": "db.companies.save({ refreshToken: authResponse.token.refresh_token, realmId: req.query.realmId });"
+   }
+  ]
+ }
+]

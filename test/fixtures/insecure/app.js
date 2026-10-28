@@ -1,7 +1,7 @@
 const OAuthClient = require('intuit-oauth');
 const express = require('express');
 const db = require('./db');
-const ENCRYPTION_KEY = 'a1b2c3d4e5f6a7b8c9d0e1f2';
+const ENCRYPTION_KEY = 'not-a-real-key-example';
 const app = express();
 app.use(require('express-session')({ secret: 'x', cookie: { httpOnly: false } }));
 const oauthClient = new OAuthClient({ clientId: process.env.ID, clientSecret: process.env.SECRET, environment: 'sandbox', redirectUri: process.env.CB });

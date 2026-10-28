@@ -103,7 +103,7 @@ export const REQUIREMENTS = {
 export const MANUAL_CHECKS = [
   { id: 'patching-logging', prompt: 'OS, web server, runtime and dependencies are on current patch levels (e.g. `npm audit`, Dependabot, base image updates).' },
   { id: 'auth-session', prompt: 'Every route that reads or writes QuickBooks data enforces authentication and checks the user owns that realmId (no IDOR).' },
-  { id: 'xss', prompt: 'A DAST scan (e.g. OWASP ZAP baseline) shows no reflected or stored XSS on authenticated pages.' },
+  { id: 'xss', prompt: 'A penetration test or DAST scan of signed-in pages (e.g. Aikido AI pentesting or an OWASP ZAP baseline) shows no XSS, CSRF, injection or access-control issues.' },
   { id: 'injection', prompt: 'All database and XML access is parameterized; XML parsers have external entities disabled.' },
   { id: 'no-third-party-access', prompt: 'No QuickBooks data is sent to analytics, LLM, logging or other third-party services outside the app\'s stated function.' },
   { id: 'data-minimization', prompt: 'QuickBooks data is retained only as long as needed for the app\'s function, and deleted on disconnect.' },
