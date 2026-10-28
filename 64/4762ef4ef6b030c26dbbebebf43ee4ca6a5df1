@@ -1,0 +1,21 @@
+.github/workflows/release.yml
+  s_a26e669cd681d7::t_25881d0d0057c9 1-31
+README.md
+  s_a26e669cd681d7::t_f1220072d01e6a 313-316
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "644762ef4ef6b030c26dbbebebf43ee4ca6a5df1",
+  "prompts": {},
+  "sessions": {
+    "s_a26e669cd681d7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4121e4bf-dff1-4665-a92b-c08f125b9b89",
+        "model": "unknown"
+      },
+      "human_author": "GJ <info@gertjandewilde.com>"
+    }
+  }
+}
