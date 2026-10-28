@@ -1,0 +1,57 @@
+src/cli.js
+  s_a26e669cd681d7::t_8ecea819d76c93 1-96
+action.yml
+  s_a26e669cd681d7::t_0caac850ed73a2 1-58
+test/runtime.test.js
+  s_a26e669cd681d7::t_80347be6705e17 1-54
+src/report.js
+  s_a26e669cd681d7::t_525fc39d90fff7 1-78
+README.md
+  s_a26e669cd681d7::t_54e4a9b6cf73c9 1-84,86-94
+  s_a26e669cd681d7::t_605e958dcf9059 85
+bin/quickbooks-review-check.js
+  s_a26e669cd681d7::t_22060c6af6331e 1-10
+src/source.js
+  s_a26e669cd681d7::t_d5b14f2d61905a 1-93,95-123,125-155,157-211,214-230
+  s_a26e669cd681d7::t_02b05056165cc4 124,156,212-213
+  s_a26e669cd681d7::t_408229074c2cf7 94
+.gitignore
+  s_a26e669cd681d7::t_605e958dcf9059 1-4
+LICENSE
+  s_a26e669cd681d7::t_605e958dcf9059 1-21
+.github/workflows/ci.yml
+  s_a26e669cd681d7::t_605e958dcf9059 1-14
+test/fixtures/secure/app.js
+  s_a26e669cd681d7::t_23008506f9eaf3 1-22
+package.json
+  s_a26e669cd681d7::t_de2702a2aa5588 1-13,15-19
+  s_a26e669cd681d7::t_4c4ef3773dd44e 14
+src/runtime.js
+  s_a26e669cd681d7::t_6571d5bfe287e7 247
+  s_a26e669cd681d7::t_37e8ae5bbf55fc 1-165,168,170-204,206-246,248-277
+  s_a26e669cd681d7::t_a47bae4d71b36f 166-167,169,205
+src/http.js
+  s_a26e669cd681d7::t_09890dbef06633 1-109
+src/requirements.js
+  s_a26e669cd681d7::t_bfa1015d08ce92 1-111
+test/fixtures/insecure/app.js
+  s_a26e669cd681d7::t_23008506f9eaf3 1-22
+test/source.test.js
+  s_a26e669cd681d7::t_23008506f9eaf3 1-29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9d8e4a9f0ef5fb0e75c37fbdbd5e76a4d06fdfc8",
+  "prompts": {},
+  "sessions": {
+    "s_a26e669cd681d7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4121e4bf-dff1-4665-a92b-c08f125b9b89",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "GJ <info@gertjandewilde.com>"
+    }
+  }
+}
