@@ -1,0 +1,23 @@
+site/app/page.tsx
+  s_a26e669cd681d7::t_0419150c880ae6 7
+README.md
+  s_a26e669cd681d7::t_0419150c880ae6 21
+package.json
+  s_a26e669cd681d7::t_0419150c880ae6 2,9-14,21-28,30-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6f39b7ab7b79c599c6a0277348bf28086cecf709",
+  "prompts": {},
+  "sessions": {
+    "s_a26e669cd681d7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4121e4bf-dff1-4665-a92b-c08f125b9b89",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "GJ <info@gertjandewilde.com>"
+    }
+  }
+}
