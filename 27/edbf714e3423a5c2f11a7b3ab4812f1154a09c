@@ -1,0 +1,21 @@
+README.md
+  s_a26e669cd681d7::t_679706a2a2470a 14-16,87
+src/report.js
+  s_a26e669cd681d7::t_1ce3989769c5d2 50
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "27edbf714e3423a5c2f11a7b3ab4812f1154a09c",
+  "prompts": {},
+  "sessions": {
+    "s_a26e669cd681d7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4121e4bf-dff1-4665-a92b-c08f125b9b89",
+        "model": "unknown"
+      },
+      "human_author": "GJ <info@gertjandewilde.com>"
+    }
+  }
+}
