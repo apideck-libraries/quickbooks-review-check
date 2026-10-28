@@ -1,6 +1,6 @@
 {
   "name": "@apideck/quickbooks-review-check",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Free self-check for the Intuit QuickBooks Online app security review: runtime probes + source scan, as a CLI and GitHub Action.",
   "type": "module",
   "bin": {
