@@ -4,7 +4,7 @@ import { Copy } from '@/components/Copy';
 import { Attest } from '@/components/Attest';
 import { REPO } from '@/lib/site';
 
-const CLI = 'npx quickbooks-review-check --url https://app.example.com --callback /oauth/callback --source .';
+const CLI = 'npx @apideck/quickbooks-review-check --url https://app.example.com --callback /oauth/callback --source .';
 
 const YAML = `name: QuickBooks review check
 on:

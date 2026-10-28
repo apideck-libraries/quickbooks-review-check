@@ -18,7 +18,7 @@ Every result maps to one of Intuit's review categories. Each report ends with a 
 ## Quick start
 
 ```bash
-npx quickbooks-review-check \
+npx @apideck/quickbooks-review-check \
   --url https://app.example.com \
   --callback /oauth/quickbooks/callback \
   --path /dashboard --path /settings/quickbooks \
