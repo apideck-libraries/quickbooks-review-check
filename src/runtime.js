@@ -24,12 +24,19 @@ export function analyzeHttpToHttps(outcome) {
     { fix: 'Redirect all port-80 traffic to HTTPS with a 301 and enable HSTS.' });
 }
 
-export function analyzeHsts(res) {
-  const h = res.headers['strict-transport-security'];
-  if (!h) return r('hsts', 'https-everywhere', 'warn', 'No Strict-Transport-Security header', `${res.url} sets no HSTS header. Not an explicit Intuit item, but reviewers' scanners flag it.`, { fix: 'Add `Strict-Transport-Security: max-age=31536000; includeSubDomains`.' });
+// Takes every HTTPS response from the host: an API host often answers `/` from its gateway (a bare
+// 403 without app headers) while the app's own routes do send HSTS.
+export function analyzeHsts(responses) {
+  const list = Array.isArray(responses) ? responses : [responses];
+  const withHsts = list.find((res) => res.headers['strict-transport-security']);
+  if (!withHsts) {
+    const urls = list.map((res) => new URL(res.url).pathname).join(', ');
+    return r('hsts', 'https-everywhere', 'warn', 'No Strict-Transport-Security header', `None of the probed responses (${urls}) set HSTS. Not an explicit Intuit item, but reviewers' scanners flag it.`, { fix: 'Add `Strict-Transport-Security: max-age=31536000; includeSubDomains`.' });
+  }
+  const h = withHsts.headers['strict-transport-security'];
   const m = /max-age=(\d+)/i.exec(h);
   if (!m || Number(m[1]) < 15552000) return r('hsts', 'https-everywhere', 'warn', 'HSTS max-age is short', `HSTS: ${h} (recommend ≥ 6 months).`);
-  return r('hsts', 'https-everywhere', 'pass', 'HSTS enabled', h);
+  return r('hsts', 'https-everywhere', 'pass', 'HSTS enabled', `${h} (on ${new URL(withHsts.url).pathname})`);
 }
 
 export function analyzeTls(results) {
@@ -140,6 +147,11 @@ export function analyzeTokenEndpoint(res) {
       `GET ${path}?code=…&realmId=… → ${res.status} text/html. Any third-party resource on that page receives the code and realmId via Referer.${safeReferrer ? ` (Referrer-Policy: ${refPolicy} mitigates, but Intuit still requires a redirect.)` : ''}`,
       { fix: 'Handle the callback server-side and always answer with `302 Found` — on success and on error (redirect to an error page without the parameters).' });
   }
+  // An error for a request it cannot place (unknown state, missing code) has nowhere safe to
+  // redirect to. What the rule guards against is HTML in the response, which a non-HTML error avoids.
+  if (res.status >= 400) {
+    return r(`token-endpoint:${path}`, req, 'pass', `${path} answers invalid requests without HTML`, `GET ${path} with a fake code and state → ${res.status} ${res.headers['content-type'] || ''}. No page is rendered, so nothing can leak through Referer. A real authorization should still end in a 302; test that with a real connect flow.`);
+  }
   return r(`token-endpoint:${path}`, req, 'warn', `${path} returns ${res.status} without redirect`, `Body is not HTML (${res.headers['content-type'] || 'no content-type'}), so Referer leakage is unlikely, but Intuit expects a 302.`);
 }
 
@@ -214,7 +226,6 @@ export async function runRuntime({ url, paths = [], callback, headers = {}, time
   log(`GET ${httpUrl.href}`);
   const plain = await safe(() => request(httpUrl.href, { timeout, lookup }));
   push(analyzeHttpToHttps({ url: httpUrl.href, ...plain }));
-  push(analyzeHsts(home));
 
   // TLS
   const port = Number(base.port || 443);
@@ -279,6 +290,7 @@ export async function runRuntime({ url, paths = [], callback, headers = {}, time
   const openRedirect = hits.length > 0;
   if (!openRedirect) push(r('open-redirect', 'open-redirect', 'pass', 'No open redirect found', `Probed ${REDIRECT_PARAMS.length} common redirect parameters on ${redirectTargets.join(', ')}.`));
 
+  push(analyzeHsts(responses.filter((res) => res.url.startsWith('https:'))));
   push(...analyzeCookies(responses));
   push(...analyzeDisclosure(home));
   push(analyzeSecurityHeaders(home));

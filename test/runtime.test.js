@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
-import { analyzeCacheControl, analyzeCookies, analyzeTokenEndpoint, analyzeTrace, analyzeHttpToHttps, analyzeTls, analyzeOpenRedirect } from '../src/runtime.js';
+import { analyzeCacheControl, analyzeCookies, analyzeTokenEndpoint, analyzeTrace, analyzeHttpToHttps, analyzeTls, analyzeOpenRedirect, analyzeHsts } from '../src/runtime.js';
 import { request } from '../src/http.js';
 
 const res = (over = {}) => ({ url: 'https://app.test/dashboard', status: 200, headers: {}, setCookies: [], body: '', ...over });
@@ -25,6 +25,15 @@ test('token endpoint: HTML fails, 302 passes, token in Location fails', () => {
   assert.equal(analyzeTokenEndpoint(res({ url, headers: { 'content-type': 'text/html' }, body: '<html>ok</html>' })).status, 'fail');
   assert.equal(analyzeTokenEndpoint(res({ url, status: 302, headers: { location: '/app' } })).status, 'pass');
   assert.equal(analyzeTokenEndpoint(res({ url, status: 302, headers: { location: '/app?realmId=1' } })).status, 'fail');
+  assert.equal(analyzeTokenEndpoint(res({ url, status: 422, headers: { 'content-type': 'application/json' }, body: '{"error":"x"}' })).status, 'pass');
+  assert.equal(analyzeTokenEndpoint(res({ url, status: 200, headers: { 'content-type': 'application/json' }, body: '{}' })).status, 'warn');
+});
+
+test('hsts: passes when any probed response sets it', () => {
+  const gateway = res({ url: 'https://api.test/', status: 403 });
+  const route = res({ url: 'https://api.test/callback', headers: { 'strict-transport-security': 'max-age=31536000' } });
+  assert.equal(analyzeHsts([gateway, route]).status, 'pass');
+  assert.equal(analyzeHsts([gateway]).status, 'warn');
 });
 
 test('trace / http redirect / open redirect', () => {
