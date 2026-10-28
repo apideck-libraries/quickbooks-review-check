@@ -181,17 +181,28 @@ async function safe(fn) {
   }
 }
 
-export async function runRuntime({ url, paths = [], callback, headers = {}, timeout = 10000, log = () => {} }) {
+/**
+ * @param {{ url: string, paths?: string[], callback?: string, headers?: Record<string, string>, timeout?: number,
+ *   log?: (m: string) => void, onResult?: (r: object) => void, lookup?: Function }} opts
+ */
+// onResult streams each result as soon as it is known; lookup lets a hosted scanner pin DNS to vetted IPs.
+export async function runRuntime({ url, paths = [], callback, headers = {}, timeout = 10000, log = () => {}, onResult, lookup }) {
   const base = new URL(url);
   if (base.protocol !== 'https:') base.protocol = 'https:';
   const results = [];
+  const push = (...items) => {
+    for (const item of items) {
+      results.push(item);
+      onResult?.(item);
+    }
+  };
   const responses = [];
   const at = (p) => new URL(p, base).toString();
 
   log(`GET ${base.href}`);
-  const home = await safe(() => request(base.href, { headers, timeout }));
+  const home = await safe(() => request(base.href, { headers, timeout, lookup }));
   if (home.error) {
-    results.push(r('reachable', 'https-everywhere', 'fail', 'HTTPS endpoint unreachable', `${base.href}: ${home.error}`));
+    push(r('reachable', 'https-everywhere', 'fail', 'HTTPS endpoint unreachable', `${base.href}: ${home.error}`));
     return results;
   }
   responses.push(home);
@@ -201,39 +212,39 @@ export async function runRuntime({ url, paths = [], callback, headers = {}, time
   httpUrl.protocol = 'http:';
   httpUrl.port = '';
   log(`GET ${httpUrl.href}`);
-  const plain = await safe(() => request(httpUrl.href, { timeout }));
-  results.push(analyzeHttpToHttps({ url: httpUrl.href, ...plain }));
-  results.push(analyzeHsts(home));
+  const plain = await safe(() => request(httpUrl.href, { timeout, lookup }));
+  push(analyzeHttpToHttps({ url: httpUrl.href, ...plain }));
+  push(analyzeHsts(home));
 
   // TLS
   const port = Number(base.port || 443);
   log(`TLS handshakes ${base.hostname}:${port}`);
-  const [v10, v11, v12, v13] = await Promise.all(['TLSv1', 'TLSv1.1', 'TLSv1.2', 'TLSv1.3'].map((v) => tlsHandshake(base.hostname, port, v)));
-  results.push(...analyzeTls({ v10, v11, v12, v13 }));
+  const [v10, v11, v12, v13] = await Promise.all(['TLSv1', 'TLSv1.1', 'TLSv1.2', 'TLSv1.3'].map((v) => tlsHandshake(base.hostname, port, v, { lookup })));
+  push(...analyzeTls({ v10, v11, v12, v13 }));
 
   // Cache-Control on sensitive pages (user-specified; else the callback and home page)
   const sensitive = paths.length ? paths : [base.pathname];
   for (const p of sensitive) {
     const target = at(p);
     log(`GET ${target}`);
-    const res = p === base.pathname ? home : await safe(() => request(target, { headers, timeout }));
+    const res = p === base.pathname ? home : await safe(() => request(target, { headers, timeout, lookup }));
     if (res.error) {
-      results.push(r(`cache-control:${p}`, 'cache-control', 'warn', `Could not fetch ${p}`, res.error));
+      push(r(`cache-control:${p}`, 'cache-control', 'warn', `Could not fetch ${p}`, res.error));
       continue;
     }
     if (res !== home) responses.push(res);
-    results.push(analyzeCacheControl(res, { sensitive: paths.length > 0 }));
+    push(analyzeCacheControl(res, { sensitive: paths.length > 0 }));
   }
 
   // HTTP methods
   for (const m of ['TRACE', 'TRACK']) {
     log(`${m} ${base.href}`);
-    const res = await safe(() => request(base.href, { method: m, headers: { 'x-qbrc-probe': '1' }, timeout }));
-    results.push(analyzeTrace(res.error ? { ...res, url: base.href } : res, m));
+    const res = await safe(() => request(base.href, { method: m, headers: { 'x-qbrc-probe': '1' }, timeout, lookup }));
+    push(analyzeTrace(res.error ? { ...res, url: base.href } : res, m));
   }
-  const opt = await safe(() => request(base.href, { method: 'OPTIONS', timeout }));
+  const opt = await safe(() => request(base.href, { method: 'OPTIONS', timeout, lookup }));
   const allow = analyzeAllow(opt);
-  if (allow) results.push(allow);
+  if (allow) push(allow);
 
   // Token endpoint / OAuth callback
   if (callback) {
@@ -242,36 +253,34 @@ export async function runRuntime({ url, paths = [], callback, headers = {}, time
     cb.searchParams.set('state', 'qbrc-probe-state');
     cb.searchParams.set('realmId', '9130000000000000');
     log(`GET ${cb.href}`);
-    const res = await safe(() => request(cb.href, { headers: { ...headers, referer: 'https://appcenter.intuit.com/' }, timeout }));
-    if (res.error) results.push(r('token-endpoint', 'token-endpoint-302', 'warn', 'Callback unreachable', `${cb.href}: ${res.error}`));
-    else if (res.status === 404) results.push(r('token-endpoint', 'token-endpoint-302', 'warn', `Callback ${callback} returned 404`, 'Check the --callback path matches the Redirect URI registered in the Intuit developer portal.'));
+    const res = await safe(() => request(cb.href, { headers: { ...headers, referer: 'https://appcenter.intuit.com/' }, timeout, lookup }));
+    if (res.error) push(r('token-endpoint', 'token-endpoint-302', 'warn', 'Callback unreachable', `${cb.href}: ${res.error}`));
+    else if (res.status === 404) push(r('token-endpoint', 'token-endpoint-302', 'warn', `Callback ${callback} returned 404`, 'Check the --callback path matches the Redirect URI registered in the Intuit developer portal.'));
     else {
       responses.push(res);
-      results.push(analyzeTokenEndpoint(res));
-      results.push(analyzeCacheControl(res, { sensitive: true }));
+      push(analyzeTokenEndpoint(res));
+      push(analyzeCacheControl(res, { sensitive: true }));
     }
   } else {
-    results.push(r('token-endpoint', 'token-endpoint-302', 'skip', 'OAuth callback not probed', 'Pass --callback /your/oauth/callback to verify the 302 rule.'));
+    push(r('token-endpoint', 'token-endpoint-302', 'skip', 'OAuth callback not probed', 'Pass --callback /your/oauth/callback to verify the 302 rule.'));
   }
 
   // Open redirects on home and callback
   const redirectTargets = [base.pathname, callback].filter(Boolean);
-  let openRedirect = false;
-  for (const p of redirectTargets) for (const param of REDIRECT_PARAMS) {
+  const probes = redirectTargets.flatMap((p) => REDIRECT_PARAMS.map((param) => ({ p, param })));
+  const found = await Promise.all(probes.map(async ({ p, param }) => {
     const u = new URL(at(p));
     u.searchParams.set(param, EVIL);
-    const res = await safe(() => request(u.href, { headers, timeout }));
-    if (res.error) continue;
-    const finding = analyzeOpenRedirect(res, param);
-    if (finding) {
-      results.push(finding);
-      openRedirect = true;
-    }
-  }
-  if (!openRedirect) results.push(r('open-redirect', 'open-redirect', 'pass', 'No open redirect found', `Probed ${REDIRECT_PARAMS.length} common redirect parameters on ${redirectTargets.join(', ')}.`));
+    const res = await safe(() => request(u.href, { headers, timeout, lookup }));
+    return res.error ? null : analyzeOpenRedirect(res, param);
+  }));
+  const hits = found.filter(Boolean);
+  push(...hits);
+  const openRedirect = hits.length > 0;
+  if (!openRedirect) push(r('open-redirect', 'open-redirect', 'pass', 'No open redirect found', `Probed ${REDIRECT_PARAMS.length} common redirect parameters on ${redirectTargets.join(', ')}.`));
 
-  results.push(...analyzeCookies(responses));
-  results.push(...analyzeDisclosure(home));
-  results.push(analyzeSecurityHeaders(home));
+  push(...analyzeCookies(responses));
+  push(...analyzeDisclosure(home));
+  push(analyzeSecurityHeaders(home));
   return results;
 }

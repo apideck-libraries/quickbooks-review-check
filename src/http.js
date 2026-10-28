@@ -5,7 +5,7 @@ import tls from 'node:tls';
 const BODY_LIMIT = 64 * 1024;
 
 // Low-level request that never follows redirects and supports any method (fetch rejects TRACE).
-export function request(url, { method = 'GET', headers = {}, timeout = 10000, insecure = false } = {}) {
+export function request(url, { method = 'GET', headers = {}, timeout = 10000, insecure = false, lookup } = {}) {
   const u = new URL(url);
   const mod = u.protocol === 'http:' ? http : https;
   return new Promise((resolve, reject) => {
@@ -16,6 +16,7 @@ export function request(url, { method = 'GET', headers = {}, timeout = 10000, in
         headers: { 'user-agent': 'quickbooks-review-check/0.1 (+https://github.com/apideck-libraries/quickbooks-review-check)', ...headers },
         timeout,
         rejectUnauthorized: !insecure,
+        ...(lookup && { lookup }),
       },
       (res) => {
         const chunks = [];
@@ -45,7 +46,7 @@ export function request(url, { method = 'GET', headers = {}, timeout = 10000, in
 
 // Try a TLS handshake pinned to one protocol version. Resolves { ok, protocol, cipher } or { ok:false, error }.
 // SECLEVEL=0 lets modern OpenSSL builds still *offer* TLS 1.0/1.1 so we can detect servers that accept them.
-export function tlsHandshake(host, port, version, { timeout = 8000 } = {}) {
+export function tlsHandshake(host, port, version, { timeout = 8000, lookup } = {}) {
   return new Promise((resolve) => {
     let settled = false;
     const done = (v) => {
@@ -65,6 +66,7 @@ export function tlsHandshake(host, port, version, { timeout = 8000 } = {}) {
         ciphers: version === 'TLSv1.3' ? undefined : 'DEFAULT:@SECLEVEL=0',
         rejectUnauthorized: false,
         timeout,
+        ...(lookup && { lookup }),
       });
     } catch (e) {
       return done({ ok: false, error: e.message, clientUnsupported: true });
