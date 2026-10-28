@@ -310,6 +310,10 @@ node bin/quickbooks-review-check.js --url https://localhost:8443 --http-port 808
 
 `node examples/record.js <dir>` re-records both apps' scan results and source files for the website's "Try a sample" buttons.
 
+## Releasing
+
+Bump `version` in `package.json`, merge, then push a matching tag (`git tag v0.2.0 && git push origin v0.2.0`). The Release workflow runs the tests, publishes to npm with provenance via trusted publishing, and moves the major tag (`v0`) the GitHub Action uses.
+
 ## Development
 
 ```bash
