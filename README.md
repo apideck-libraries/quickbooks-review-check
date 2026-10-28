@@ -11,7 +11,9 @@ It does two kinds of checks, both free:
 
 Every result maps to one of Intuit's review categories. Each report ends with a **manual attestation checklist** for the items no scanner can prove: patching, access control, DAST, and the data-usage rules.
 
-> Not affiliated with or endorsed by Intuit. Passing these checks does not guarantee approval. It catches the common, mechanical reasons for rejection.
+> **Disclaimer.** This is a self-assessment aid, not a certification, penetration test, security audit or legal/compliance advice. Passing these checks does not mean an app meets Intuit's requirements or will be approved. Always confirm requirements against Intuit's official developer documentation. Only run runtime checks against apps you own or are authorized to test. Provided "as is" under the MIT License, without warranty.
+>
+> Not affiliated with, endorsed by or sponsored by Intuit Inc. Intuit and QuickBooks are trademarks of Intuit Inc., used only to describe what the tool checks against.
 
 ## Quick start
 
@@ -82,7 +84,7 @@ export function decrypt(blob) {
 
 ## Using Apideck?
 
-If your app connects to QuickBooks through [Apideck Vault](https://www.apideck.com), Apideck stores and encrypts the Intuit OAuth tokens and realmId. Your app never holds them, so for the OAuth token-management section you point the reviewer to Apideck's security documentation instead of building token encryption yourself. You still own the runtime checks (HTTPS, cookies, cache headers) and the data-usage rules for your app, and this tool covers those.
+If your app connects to QuickBooks through [Apideck Vault](https://www.apideck.com), Apideck stores and encrypts the Intuit OAuth tokens and realmId. Your app never holds them, and the scanner recognizes this setup. Ask Apideck for its security documentation if your reviewer wants details on token storage. You still own the runtime checks (HTTPS, cookies, cache headers) and the data-usage rules for your app, and this tool covers those.
 
 ## Development
 
