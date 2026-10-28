@@ -1,0 +1,58 @@
+name: QuickBooks App Review Check
+description: Free self-check against the Intuit QuickBooks Online app security review — runtime probes and source scan.
+author: Apideck
+branding:
+  icon: shield
+  color: green
+
+inputs:
+  url:
+    description: Base URL of the deployed app (runtime checks). Leave empty to only scan source.
+    required: false
+  callback:
+    description: OAuth redirect URI path, e.g. /oauth/callback
+    required: false
+  paths:
+    description: Newline-separated sensitive paths to check for no-store caching
+    required: false
+  headers:
+    description: Newline-separated extra headers ("Cookie: session=…") — pass secrets via ${{ secrets.* }}
+    required: false
+  source:
+    description: Directory to scan for token-handling issues. Set to "" to skip.
+    required: false
+    default: "."
+  fail-on:
+    description: fail | warn | never
+    required: false
+    default: fail
+
+outputs:
+  report:
+    description: Path to the Markdown report
+    value: ${{ steps.run.outputs.report }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - id: run
+      shell: bash
+      env:
+        QBRC_URL: ${{ inputs.url }}
+        QBRC_CALLBACK: ${{ inputs.callback }}
+        QBRC_PATHS: ${{ inputs.paths }}
+        QBRC_HEADERS: ${{ inputs.headers }}
+        QBRC_SOURCE: ${{ inputs.source }}
+        QBRC_FAIL_ON: ${{ inputs.fail-on }}
+      run: |
+        args=(--fail-on "$QBRC_FAIL_ON" --markdown "$RUNNER_TEMP/quickbooks-review.md" --json "$RUNNER_TEMP/quickbooks-review.json")
+        [ -n "$QBRC_URL" ] && args+=(--url "$QBRC_URL")
+        [ -n "$QBRC_CALLBACK" ] && args+=(--callback "$QBRC_CALLBACK")
+        [ -n "$QBRC_SOURCE" ] && args+=(--source "$QBRC_SOURCE")
+        while IFS= read -r p; do [ -n "$p" ] && args+=(--path "$p"); done <<< "$QBRC_PATHS"
+        while IFS= read -r h; do [ -n "$h" ] && args+=(--header "$h"); done <<< "$QBRC_HEADERS"
+        echo "report=$RUNNER_TEMP/quickbooks-review.md" >> "$GITHUB_OUTPUT"
+        node "$GITHUB_ACTION_PATH/bin/quickbooks-review-check.js" "${args[@]}"

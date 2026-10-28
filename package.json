@@ -1,0 +1,19 @@
+{
+  "name": "quickbooks-review-check",
+  "version": "0.1.0",
+  "description": "Free self-check for the Intuit QuickBooks Online app security review: runtime probes + source scan, as a CLI and GitHub Action.",
+  "type": "module",
+  "bin": {
+    "quickbooks-review-check": "bin/quickbooks-review-check.js"
+  },
+  "files": ["bin", "src", "README.md", "LICENSE"],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": ["quickbooks", "intuit", "security", "app-review", "oauth", "github-action"],
+  "author": "Apideck",
+  "license": "MIT"
+}
