@@ -1,0 +1,51 @@
+examples/secure-app/oauth.js
+  s_a26e669cd681d7::t_5b92eb89fcf1e9 1-52
+examples/insecure-app/db.js
+  s_a26e669cd681d7::t_524d8da3c742e8 1-7
+src/scan-core.js
+  s_a26e669cd681d7::t_03f1435cdba99f 84
+examples/certs.js
+  s_a26e669cd681d7::t_bf0d898529a968 1-21
+test/e2e.test.js
+  s_a26e669cd681d7::t_03f1435cdba99f 50-54
+  s_a26e669cd681d7::t_74e799ee32d3fa 1-49,55-78,80-90,92-111
+  s_a26e669cd681d7::t_25a8735dbccb4e 91
+  s_a26e669cd681d7::t_32d5d1a1e29c37 79
+examples/record.js
+  s_a26e669cd681d7::t_c317ceee83a9ca 1-69
+examples/secure-app/db.js
+  s_a26e669cd681d7::t_92a25d1b5c0a09 1-7
+examples/insecure-app/oauth.js
+  s_a26e669cd681d7::t_dbf6b0e27f7515 1-45
+bin/quickbooks-review-check.js
+  s_a26e669cd681d7::t_278d279d993118 4,6-8,11
+src/cli.js
+  s_a26e669cd681d7::t_b5ba802106d273 19,44,74
+examples/insecure-app/server.js
+  s_a26e669cd681d7::t_a183c96ba2d471 1-68
+src/runtime.js
+  s_a26e669cd681d7::t_b5ba802106d273 198,201,225-226
+examples/secure-app/server.js
+  s_a26e669cd681d7::t_cc7e117dfb708c 1-76,80-89
+  s_a26e669cd681d7::t_25a8735dbccb4e 77-79
+examples/secure-app/crypto.js
+  s_a26e669cd681d7::t_b4fb3d87bcac99 1-18
+README.md
+  s_a26e669cd681d7::t_7cbf4be416221e 89-103
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "be4c51386b72ec87eb9921430e078889664f6062",
+  "prompts": {},
+  "sessions": {
+    "s_a26e669cd681d7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4121e4bf-dff1-4665-a92b-c08f125b9b89",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "GJ <info@gertjandewilde.com>"
+    }
+  }
+}
