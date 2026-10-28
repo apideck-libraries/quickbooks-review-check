@@ -51,7 +51,7 @@ async function app(req, res) {
   }
 
   page(res, 200, '<html><body><h1>Insecure sample app</h1><a href="/connect">Connect to QuickBooks</a></body></html>', {
-    'set-cookie': 'sid=s3ss10n-ab12cd34; Path=/',
+    'set-cookie': 'sid=example-session-id; Path=/',
   });
 }
 
