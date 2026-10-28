@@ -1,0 +1,9 @@
+{
+  "/robots.txt/route": "app/robots.txt/route.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/opengraph-image/route": "app/opengraph-image/route.js",
+  "/api/scan/route": "app/api/scan/route.js",
+  "/checklist/page": "app/checklist/page.js",
+  "/page": "app/page.js"
+}

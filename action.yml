@@ -1,9 +1,9 @@
-name: QuickBooks App Review Check
-description: Free self-check against the Intuit QuickBooks Online app security review — runtime probes and source scan.
+name: Apideck QuickBooks Review Check
+description: 'Free self-check for the QuickBooks Online app security review: probes your deployed app and scans your code.'
 author: Apideck
 branding:
   icon: shield
-  color: green
+  color: purple
 
 inputs:
   url:
@@ -31,6 +31,18 @@ outputs:
   report:
     description: 'Path to the Markdown report'
     value: ${{ steps.run.outputs.report }}
+  report-json:
+    description: 'Path to the JSON report'
+    value: ${{ steps.run.outputs.report-json }}
+  failed:
+    description: 'Number of failed checks'
+    value: ${{ steps.run.outputs.failed }}
+  warnings:
+    description: 'Number of warnings'
+    value: ${{ steps.run.outputs.warnings }}
+  passed:
+    description: 'Number of passed checks'
+    value: ${{ steps.run.outputs.passed }}
 
 runs:
   using: composite
@@ -48,11 +60,18 @@ runs:
         QBRC_SOURCE: ${{ inputs.source }}
         QBRC_FAIL_ON: ${{ inputs.fail-on }}
       run: |
-        args=(--fail-on "$QBRC_FAIL_ON" --markdown "$RUNNER_TEMP/quickbooks-review.md" --json "$RUNNER_TEMP/quickbooks-review.json")
+        md="$RUNNER_TEMP/quickbooks-review.md"
+        json="$RUNNER_TEMP/quickbooks-review.json"
+        args=(--fail-on "$QBRC_FAIL_ON" --markdown "$md" --json "$json")
         [ -n "$QBRC_URL" ] && args+=(--url "$QBRC_URL")
         [ -n "$QBRC_CALLBACK" ] && args+=(--callback "$QBRC_CALLBACK")
         [ -n "$QBRC_SOURCE" ] && args+=(--source "$QBRC_SOURCE")
         while IFS= read -r p; do [ -n "$p" ] && args+=(--path "$p"); done <<< "$QBRC_PATHS"
         while IFS= read -r h; do [ -n "$h" ] && args+=(--header "$h"); done <<< "$QBRC_HEADERS"
-        echo "report=$RUNNER_TEMP/quickbooks-review.md" >> "$GITHUB_OUTPUT"
-        node "$GITHUB_ACTION_PATH/bin/quickbooks-review-check.js" "${args[@]}"
+        echo "report=$md" >> "$GITHUB_OUTPUT"
+        echo "report-json=$json" >> "$GITHUB_OUTPUT"
+        status=0
+        node "$GITHUB_ACTION_PATH/bin/quickbooks-review-check.js" "${args[@]}" || status=$?
+        # Counts are written even when the check fails, so later steps can use them.
+        node -e "const s=require(process.argv[1]).summary; for (const [k,v] of [['failed',s.fail],['warnings',s.warn],['passed',s.pass]]) console.log(k+'='+v)" "$json" >> "$GITHUB_OUTPUT"
+        exit $status

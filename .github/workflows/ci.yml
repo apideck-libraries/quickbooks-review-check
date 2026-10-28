@@ -9,6 +9,20 @@ jobs:
         with: { node-version: 20 }
       - run: npm test
       - name: Self-test the action (source only)
+        id: secure
         uses: ./
         with:
           source: test/fixtures/secure
+      - name: Self-test the action on insecure code (must report failures)
+        id: insecure
+        uses: ./
+        with:
+          source: test/fixtures/insecure
+          fail-on: never
+      - name: Check action outputs
+        run: |
+          test -f "${{ steps.secure.outputs.report }}"
+          test -f "${{ steps.secure.outputs.report-json }}"
+          test "${{ steps.secure.outputs.failed }}" = "0"
+          test "${{ steps.insecure.outputs.failed }}" -gt 0
+          echo "secure: ${{ steps.secure.outputs.passed }} passed; insecure: ${{ steps.insecure.outputs.failed }} failed"
