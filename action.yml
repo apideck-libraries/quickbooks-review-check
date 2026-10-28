@@ -7,29 +7,29 @@ branding:
 
 inputs:
   url:
-    description: Base URL of the deployed app (runtime checks). Leave empty to only scan source.
+    description: 'Base URL of the deployed app (runtime checks). Leave empty to only scan source.'
     required: false
   callback:
-    description: OAuth redirect URI path, e.g. /oauth/callback
+    description: 'OAuth redirect URI path, e.g. /oauth/callback'
     required: false
   paths:
-    description: Newline-separated sensitive paths to check for no-store caching
+    description: 'Newline-separated sensitive paths to check for no-store caching'
     required: false
   headers:
-    description: Newline-separated extra headers ("Cookie: session=…") — pass secrets via ${{ secrets.* }}
+    description: 'Newline-separated extra headers ("Cookie: session=…"); pass secrets from the secrets context'
     required: false
   source:
-    description: Directory to scan for token-handling issues. Set to "" to skip.
+    description: 'Directory to scan for token-handling issues. Set to "" to skip.'
     required: false
     default: "."
   fail-on:
-    description: fail | warn | never
+    description: 'fail | warn | never'
     required: false
     default: fail
 
 outputs:
   report:
-    description: Path to the Markdown report
+    description: 'Path to the Markdown report'
     value: ${{ steps.run.outputs.report }}
 
 runs:
