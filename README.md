@@ -5,6 +5,8 @@
 
 **Free, open-source self-check for the Intuit QuickBooks Online app security review.** Run it before you submit, and on every deploy after you're listed, so Intuit's yearly re-review doesn't catch you out.
 
+It applies to apps for **QuickBooks Online and Intuit Enterprise Suite**: Intuit's IES developer docs say IES apps follow the identical publishing steps and three-part review.
+
 Try it in the browser at **[apideck.com/tools/quickbooks-review](https://www.apideck.com/tools/quickbooks-review)**, run it locally with `npx`, or add it to CI as a GitHub Action.
 
 > **Disclaimer.** This is a self-assessment aid, not a certification, penetration test, security audit or legal/compliance advice. Passing these checks does not mean an app meets Intuit's requirements or will be approved. Always confirm requirements against Intuit's official developer documentation. Only run runtime checks against apps you own or are authorized to test. Provided "as is" under the MIT License, without warranty.
