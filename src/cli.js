@@ -16,6 +16,7 @@ Runtime checks (probe your deployed app):
   --path <path>          Sensitive page to check for no-store caching (repeatable)
   --header "K: V"        Extra request header, e.g. an authenticated session cookie (repeatable)
   --timeout <ms>         Per-request timeout (default 10000)
+  --http-port <port>     Port for the plain-HTTP redirect check (default 80; for local testing)
 
 Source checks (static scan of your code):
   --source <dir>         Scan a repository for token-handling issues
@@ -40,6 +41,7 @@ export async function main(argv) {
         path: { type: 'string', multiple: true, default: [] },
         header: { type: 'string', multiple: true, default: [] },
         timeout: { type: 'string', default: '10000' },
+        'http-port': { type: 'string' },
         source: { type: 'string' },
         'include-tests': { type: 'boolean', default: false },
         markdown: { type: 'string' },
@@ -69,7 +71,7 @@ export async function main(argv) {
   const results = [];
   if (args.url) {
     const url = /^https?:\/\//.test(args.url) ? args.url : `https://${args.url}`;
-    results.push(...(await runRuntime({ url, paths: args.path, callback: args.callback, headers, timeout: Number(args.timeout), log })));
+    results.push(...(await runRuntime({ url, paths: args.path, callback: args.callback, headers, timeout: Number(args.timeout), log, httpPort: args['http-port'] ? Number(args['http-port']) : undefined })));
   }
   if (args.source) {
     const { results: src, scanned } = scanSource(args.source, { includeTests: args['include-tests'] });

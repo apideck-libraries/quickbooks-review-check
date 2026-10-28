@@ -195,10 +195,10 @@ async function safe(fn) {
 
 /**
  * @param {{ url: string, paths?: string[], callback?: string, headers?: Record<string, string>, timeout?: number,
- *   log?: (m: string) => void, onResult?: (r: object) => void, lookup?: Function }} opts
+ *   log?: (m: string) => void, onResult?: (r: object) => void, lookup?: Function, httpPort?: number }} opts
  */
 // onResult streams each result as soon as it is known; lookup lets a hosted scanner pin DNS to vetted IPs.
-export async function runRuntime({ url, paths = [], callback, headers = {}, timeout = 10000, log = () => {}, onResult, lookup }) {
+export async function runRuntime({ url, paths = [], callback, headers = {}, timeout = 10000, log = () => {}, onResult, lookup, httpPort }) {
   const base = new URL(url);
   if (base.protocol !== 'https:') base.protocol = 'https:';
   const results = [];
@@ -222,7 +222,8 @@ export async function runRuntime({ url, paths = [], callback, headers = {}, time
   // HTTPS everywhere
   const httpUrl = new URL(base.href);
   httpUrl.protocol = 'http:';
-  httpUrl.port = '';
+  // Plain HTTP on port 80 unless told otherwise (local test servers run on high ports).
+  httpUrl.port = httpPort ? String(httpPort) : '';
   log(`GET ${httpUrl.href}`);
   const plain = await safe(() => request(httpUrl.href, { timeout, lookup }));
   push(analyzeHttpToHttps({ url: httpUrl.href, ...plain }));

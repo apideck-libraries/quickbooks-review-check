@@ -86,6 +86,21 @@ export function decrypt(blob) {
 
 If your app connects to QuickBooks through [Apideck Vault](https://www.apideck.com), Apideck stores and encrypts the Intuit OAuth tokens and realmId. Your app never holds them, and the scanner recognizes this setup. Ask Apideck for its security documentation if your reviewer wants details on token storage. You still own the runtime checks (HTTPS, cookies, cache headers) and the data-usage rules for your app, and this tool covers those.
 
+## Sample apps
+
+`examples/insecure-app` and `examples/secure-app` are two small QuickBooks apps (Node built-ins only) that the end-to-end test runs over real TLS:
+
+- **insecure-app** does what many apps start with: Intuit's sample OAuth code with `state: 'testState'`, tokens logged and stored in plain text, an HTML callback page, TRACE echoed, TLS 1.0 accepted, `Cache-Control: private`, cookies without flags, an open redirect and plain HTTP. **Never deploy it.**
+- **secure-app** fixes every one of those.
+
+```bash
+eval "$(node examples/certs.js)" && export TLS_KEY TLS_CERT NODE_EXTRA_CA_CERTS
+node examples/insecure-app/server.js &   # https://localhost:8443, http://localhost:8080
+node bin/quickbooks-review-check.js --url https://localhost:8443 --http-port 8080 --callback /oauth/callback --path /dashboard --source examples/insecure-app
+```
+
+`node examples/record.js <dir>` re-records both apps' scan results and source files for the website's "Try a sample" buttons.
+
 ## Development
 
 ```bash
